@@ -9,13 +9,12 @@
           <div class="panel-body">
              <div class="row">
                <div class="col-sm-2">
-                 <a href="{% url 'auth:profile' post.user.pk %}" class="post-avatar thumbnail"><img src="{{ post.user.profile.image.url }}" alt=""><div class="text-center">{{ post.user.get_full_name }}</div></a>
-                 <div class="likes text-center">{{ post.likes_count}} {{ post.likes_count | pluralize:"Like,Likes" }}</div>
+                 <a href="{% url 'auth:profile' post.user.pk %}" class="post-avatar"><img style="border-radius: 100%;max-width: 100%;height: auto;" src="{{ post.user.profile.image.url }}" alt="{{ post.user.get_full_name }}"></a>
                </div>
                <div class="col-sm-10">
                  <div class="bubble">
                    <div class="pointer">
-                     <p>{{ post.description }}</p>
+                     <p>{{ post.description }}</p></br>
                      {% for image in post.images.all %}
                        <img style="border-radius: 10px;max-width: 100%;height: auto;" src="{{ image.image.url }}" alt="">
                      {% endfor %}
@@ -24,9 +23,9 @@
                  </div>
 
                  {% if post.can_like %}
-                     <p class="post-actions"><a href="{% url "timeline:like_post" post.id %}">Like</a></p>
+                     <p class="post-actions"><a href="{% url "timeline:like_post" post.id %}">Like</a>&nbsp;&nbsp;&nbsp;&nbsp; {{ post.likes_count}} {{ post.likes_count | pluralize:"Like,Likes" }}</p>
                  {% else %}
-                     <p class="post-actions"><a href="{% url "timeline:unlike_post" post.id %}">unlike</a></p>
+                     <p class="post-actions"><a href="{% url "timeline:unlike_post" post.id %}">unlike</a>&nbsp;&nbsp;&nbsp;&nbsp;{{ post.likes_count}} {{ post.likes_count | pluralize:"Like,Likes" }}</p>
                  {% endif %}
 
                  {% include "comment_post.html" %}
@@ -34,18 +33,31 @@
                  <div class="comments">
                    {% for comment in post.comments %}
                      <div class="comment">
-                       <a href="{% url 'auth:profile' comment.user.pk %}" class="comment-avatar pull-left"><img src="{{ comment.user.profile.image.url }}" alt=""></a>
-                       <div class="comment-text">
-                         <p>{{ comment.description }}</p>
-                       </div>
-                       <div>
-                         {% if comment.can_like %}
-                           <p class="post-actions"><a href="{% url "timeline:like_comment" comment.id %}">Like</a></p>
-                         {% else %}
-                           <p class="post-actions"><a href="{% url "timeline:unlike_comment" comment.id %}">unlike</a></p>
-                         {% endif %}
-                         {{ comment.likes_count}} {{ comment.likes_count | pluralize:"Like,Likes" }}
-                       </div>
+
+                 <table>
+                    <tbody>
+                        <tr>
+                            <td rowspan="2" colspan="2"><a href="{% url 'auth:profile' comment.user.pk %}" class="comment-avatar pull-left"><img style="border-radius: 100%;max-width: 100%;height: auto;" src="{{ comment.user.profile.image.url }}" alt=""></a></td>
+                            <td>
+                                <div class="comment-text">
+                                    <p>{{ comment.description }}</p>
+                                  </div>
+                              </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {% if comment.can_like %}
+                                  <p class="post-actions"><a href="{% url "timeline:like_comment" comment.id %}">Like</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    {{ comment.likes_count}} {{ comment.likes_count | pluralize:"Like,Likes" }}</p>
+                                {% else %}
+                                  <p class="post-actions"><a href="{% url "timeline:unlike_comment" comment.id %}">unlike</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    {{ comment.likes_count}} {{ comment.likes_count | pluralize:"Like,Likes" }}</p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+  
                      </div>
                      <div class="clearfix"></div>
                    {% endfor %}
