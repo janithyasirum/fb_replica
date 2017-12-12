@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -26,7 +26,8 @@ def signup_view(request):
 
     if username is None or password is None or first_name is None or last_name is None:
         messages.add_message(request, messages.ERROR, "Please provide first_name, last_name, email and password")
-        return render(request, 'index.html')
+        return redirect('/')
+        # return render(request, 'index.html')
     try:
         user = User.objects.create_user(username=username, email=username, first_name=first_name, last_name=last_name,
                                         password=password)
@@ -36,10 +37,12 @@ def signup_view(request):
     except IntegrityError as e:
         if 'UNIQUE constraint' in e.args[0]:  # or e.args[0] from Django 1.10 else e.message
             messages.add_message(request, messages.ERROR, "Email already registered")
-            return render(request, 'index.html')
+            return redirect('/')
+            # return render(request, 'index.html')
         else:
             messages.add_message(request, messages.ERROR, "Something went wrong")
-            return render(request, 'index.html')
+            return redirect('/')
+            # return render(request, 'index.html')
 
 
 @csrf_exempt
@@ -49,24 +52,28 @@ def login_view(request):
 
     if username is None or password is None:
         messages.add_message(request, messages.ERROR, "Please provide email and password")
-        return render(request, 'index.html')
+        return redirect('/')
+        # return render(request, 'index.html')
 
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
         # messages.add_message(request, messages.SUCCESS, "You are logged in")
-        return HttpResponseRedirect("/")
+        return redirect('/')
+        # return HttpResponseRedirect("/")
 
     else:
         messages.add_message(request, messages.ERROR, "Unable to authenticate this user")
-        return render(request, 'index.html')
+        return redirect('/')
+        # return render(request, 'index.html')
 
 
 @login_required(login_url='/')
 def logout_view(request):
     logout(request)
     messages.add_message(request, messages.SUCCESS, "You are logged out")
-    return HttpResponseRedirect("/")
+    return redirect('/')
+    # return HttpResponseRedirect("/")
 
 
 @login_required(login_url='/')
@@ -80,7 +87,8 @@ def members_view(request):
 def profile_view(request, user_id):
     if user_id is None:
         messages.add_message(request, messages.ERROR, "Please provide id of the user")
-        return render(request, 'index.html')
+        return redirect('/')
+        # return render(request, 'index.html')
 
     try:
         user = User.objects.get(pk=user_id)
@@ -90,7 +98,8 @@ def profile_view(request, user_id):
 
     except User.DoesNotExist:
         messages.add_message(request, messages.ERROR, "Unable to find this user")
-        return render(request, 'index.html')
+        return redirect('/')
+        # return render(request, 'index.html')
 
 
 def edit_profile(request, user_id):
@@ -116,7 +125,8 @@ def edit_profile(request, user_id):
         profile.birth_date = dob
         profile.user.save()
 
-        return HttpResponseRedirect("/profile/%d/" % profile.user_id)
+        return redirect(("/profile/%d/" % profile.user_id))
+        # return HttpResponseRedirect("/profile/%d/" % profile.user_id)
 
     else:
         pass

@@ -24,9 +24,3 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=37, choices=GENDER_CHOICES, null=True, blank=True, default=Male)
 
-    def as_json(self):
-        return dict(
-            user=self.user_id,
-            # image=self.image.,
-            gender=self.gender,
-            birth_date=self.birth_date)

@@ -28,6 +28,7 @@ class PostVideos(models.Model):
 class PostFiles(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='files')
     file = models.FileField(upload_to=UploadToPathAndRename('media/Files/Post/'), null=True, blank=True)
+    file_name = models.CharField(max_length=256, default='Unnamed File')
     title = models.CharField(max_length=256, null=True, blank=True)
     footer = models.CharField(max_length=256, null=True, blank=True)
 

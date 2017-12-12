@@ -14,9 +14,12 @@
                <div class="col-sm-10">
                  <div class="bubble">
                    <div class="pointer">
-                     <p>{{ post.description }}</p></br>
+                     <p>{{ post.description }}</p><br>
                      {% for image in post.images.all %}
-                       <img style="border-radius: 10px;max-width: 100%;height: auto;" src="{{ image.image.url }}" alt="">
+                       <br><img style="border-radius: 10px;max-width: 100%;height: auto;" src="{{ image.image.url }}" alt="">
+                     {% endfor %}
+                     {% for file in post.files.all %}
+                        <br><a href="{{ file.file.url }}">{{ file.file_name }}</a>
                      {% endfor %}
                    </div>
                    <div class="pointer-border"></div>
