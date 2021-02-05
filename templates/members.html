@@ -5,25 +5,16 @@
     {% if not user.is_anonymous %}
         <div class="members">
             <h1 class="page-header">Members</h1>
+            <div class="row member-row">
             {% for member in members_list %}
-              <div class="row member-row">
                 <div class="col-md-3">
-                  <img src="{{ member.profile.image.url }}" class="img-thumbnail" alt="">
+                  <a href="{% url 'auth:profile' member.pk %}"><img src="{{ member.profile.image.url }}" style="border-radius: 100%;max-width: 100%;height: 100%;" class="img-thumbnail" alt=""></a>
                   <div class="text-center">
                     {{ member.get_full_name }}
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <p><a href="#" class="btn btn-success btn-block"><i class="fa fa-users"></i> Add Friend</a></p>
-                </div>
-                <div class="col-md-3">
-                  <p><a href="#" class="btn btn-default btn-block"><i class="fa fa-envelope"></i> Send Message</a></p>
-                </div>
-                <div class="col-md-3">
-                  <p><a href="{% url 'auth:profile' member.pk %}" class="btn btn-primary btn-block"><i class="fa fa-edit"></i> View Profile</a></p>
-                </div>
-              </div>
             {% endfor %}
+          </div>
         </div>
     {% endif %}
 

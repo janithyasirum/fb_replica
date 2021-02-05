@@ -1,10 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% for post in posts_list %}
+  <div class="panel panel-default post">
+  <div class="panel-body">
+     <div class="row">
+       <div class="col-sm-2">
+         <a href="{% url 'auth:profile' post.user.pk %}" class="post-avatar"><img style="border-radius: 100%;max-width: 100%;height: 100%;" src="{{ post.user.profile.image.url }}" alt="{{ post.user.get_full_name }}"></a>
+       </div>
+       <div class="col-sm-10">
+         <div class="bubble">
+           <div class="pointer">
+             <p>{{ post.description }}</p><br>
+             {% for image in post.images.all %}
+               <br><img style="border-radius: 10px;max-width: 100%;height: 100%;" src="{{ image.image.url }}" alt="">
+             {% endfor %}
+             {% for file in post.files.all %}
+                <br><a href="{{ file.file.url }}">{{ file.file_name }}</a>
+             {% endfor %}
+           </div>
+           <div class="pointer-border"></div>
+         </div>
+
+         {% if post.can_like %}
+             <p class="post-actions"><a href="{% url "timeline:like_post" post.id %}">Like</a>&nbsp;&nbsp;&nbsp;&nbsp; {{ post.likes_count}} {{ post.likes_count | pluralize:"Like,Likes" }}</p>
+         {% else %}
+             <p class="post-actions"><a href="{% url "timeline:unlike_post" post.id %}">unlike</a>&nbsp;&nbsp;&nbsp;&nbsp;{{ post.likes_count}} {{ post.likes_count | pluralize:"Like,Likes" }}</p>
+         {% endif %}
+
+         {% include "comment_post.html" %}
+
+         <div class="comments">
+           {% for comment in post.comments %}
+             <div class="comment">
+
+         <table>
+            <tbody>
+                <tr>
+                    <td rowspan="2" colspan="2"><a href="{% url 'auth:profile' comment.user.pk %}" class="comment-avatar pull-left"><img style="border-radius: 100%;max-width: 100%;height: 100%;" src="{{ comment.user.profile.image.url }}" alt=""></a></td>
+                    <td>
+                        <div class="comment-text">
+                            <p>{{ comment.description }}</p>
+                          </div>
+                      </td>
+                </tr>
+                <tr>
+                    <td>
+                        {% if comment.can_like %}
+                          <p class="post-actions"><a href="{% url "timeline:like_comment" comment.id %}">Like</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            {{ comment.likes_count}} {{ comment.likes_count | pluralize:"Like,Likes" }}</p>
+                        {% else %}
+                          <p class="post-actions"><a href="{% url "timeline:unlike_comment" comment.id %}">unlike</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            {{ comment.likes_count}} {{ comment.likes_count | pluralize:"Like,Likes" }}</p>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+             </div>
+             <div class="clearfix"></div>
+           {% endfor %}
+         </div>
+       </div>
+     </div>
+  </div>
+</div>
+{% endfor %}

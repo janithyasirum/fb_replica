@@ -93,7 +93,8 @@ def profile_view(request, user_id):
     try:
         user = User.objects.get(pk=user_id)
         # user.prefetch_related('profile')
-        context = {"user_obj": user}
+        posts = Post.objects.filter(user=user).order_by('-date')
+        context = {"user_obj": user, "posts_list": get_posts(posts, request.user)}
         return render(request, 'profile.html', context)
 
     except User.DoesNotExist:

@@ -1,0 +1,2 @@
+id,password,last_login,is_superuser,groups,user_permissions,username,first_name,last_name,email,is_staff,is_active,date_joined,Department,Position,Status,Street,Zipcode,Date_activated,Date_deactivated,Activated_by
+,abc123,,,,,newuser,asd,hjj,as@gmail.com,,,,jdahskj,ksaj,active,kajs,hsdk,,,
