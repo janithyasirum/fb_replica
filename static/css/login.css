@@ -1,0 +1,23 @@
+/*sign btn*/
+	button[id="sign-btn"] {
+		color: #ffffff;
+    background-color: rgba(235, 30, 54, 1);
+    border-color: #401010;
+	}
+
+button[id="sign-btn"]:hover {
+		color: #000000;
+    background-color: rgb(214 17 40);
+	border-color: #801717;
+	}
+
+/*sign form*/
+input[class="form-control"] {
+    background: white;
+    color: #000000;
+}
+input[class="form-control"]:focus {
+ border-color: black;
+	box-shadow: 1px 1px 1px black;
+}
+
