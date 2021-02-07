@@ -1,34 +1,44 @@
+<body class="profile-bg">
 {% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
     {% if not user.is_anonymous %}
         <div class="profile">
-          <h1 class="page-header">{{ user_obj.get_full_name }}</h1>
-          <div class="row">
+
+          <h1 class="usr-name">{{ user_obj.get_full_name }}</h1>
+
+          <div class="row" id="pro-frm">
             <div class="col-md-4">
-              <img src="{{ user_obj.profile.image.url }}" class="img-thumbnail" alt="">
-            </div>
-            <div class="col-md-8">
-              <ul>
-                <li><strong>Name: </strong>{{ user_obj.get_full_name }}</li>
-                <li><strong>Email: </strong>{{ user_obj.email }}</li>
-                <li><strong>City: </strong>{{ user_obj.profile.city }}</li>
-                <li><strong>State: </strong>{{ user_obj.profile.state }}</li>
-                <li><strong>Gender: </strong>{{ user_obj.profile.gender }}</li>
-                <li><strong>DOB: </strong>{{ user_obj.profile.birth_date }}</li>
+              <img src="{{ user_obj.profile.image.url }}" class="pro-photo" alt="">
                 {% if user.pk == user_obj.pk %}
-                    <li><a href="{% url 'auth:edit_profile' user_obj.pk %}"><strong>Edit Profile</strong></a></li>
+                    <li><a  href="{% url 'auth:edit_profile' user_obj.pk %}"><strong class="edit">Edit Profile</strong></a></li>
                 {% endif %}
+            </div>
+            <div class="col-md-8" >
+              <ul id="u-form">
+                <li><strong class="name">Name: </strong>{{ user_obj.get_full_name }}</li>
+                <li><strong class="name">Email: </strong>{{ user_obj.email }}</li>
+                <li><strong class="name">City: </strong>{{ user_obj.profile.city }}</li>
+                <li><strong class="name">State: </strong>{{ user_obj.profile.state }}</li>
+                <li><strong class="name">Gender: </strong>{{ user_obj.profile.gender }}</li>
+                <li><strong class="name">DOB: </strong>{{ user_obj.profile.birth_date }}</li>
+
+
               </ul>
             </div>
-          </div><br><br>
+          </div>
+            <br><br>
           <div class="row">
             <div class="col-md-12">
                 {% include "wall_post.html" %}
+
             </div>
+
           </div>
+
         </div>
     {% endif %}
 
 {% endblock %}
+</body>

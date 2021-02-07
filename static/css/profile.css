@@ -1,0 +1,29 @@
+.profile-bg {
+    background: #eee;
+}
+.hr-1 {
+    border-bottom: 1px solid #090909;
+    margin-right: 80px;
+    margin-left: 5em;
+}
+.pro-photo {
+    border-radius: 50%;
+    width: 180px;
+    height: 150px;
+    margin-top: 8px;
+    margin-left: 6px;
+}
+.edit {
+    margin-left: 60px;
+
+}
+#pro-frm {
+     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    width: 600px;
+    margin-left: 5em;
+}
+.usr-name {
+    margin-left: 2em;
+}
+
+

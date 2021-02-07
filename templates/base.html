@@ -1,5 +1,5 @@
 
-{% if false %}
+{% if user.is_anonymous %}
     {% include "login.html" %}
 {% else %}
 {% load static %}
@@ -17,6 +17,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Dobble Social Network</title>
+    <link href="{% static 'css/wall-post.css' %}" rel="stylesheet">
+      <link href="{% static 'css/profile.css' %}" rel="stylesheet">
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
@@ -24,42 +26,44 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.0/css/all.min.css" integrity="sha512-gRH0EcIcYBFkQTnbpO8k0WlsD20x5VzjhOA1Og8+ZUAhcMUCvd+APD35FJw3GzHAP3e+mP28YcDJxVr745loHw==" crossorigin="anonymous" />
+
   </head>
 
-  <body>
+  <body class="base-body">
 
-  <header>
-    <div class="container">
-      <img src="{% static 'img/logo.png' %}" class="logo" alt="">
-        {% if user.is_anonymous %}
-          <form class="form-inline" method='POST' action='{% url "auth:login" %}'>
-            {% csrf_token %}
-            <div class="form-group">
-              <label class="sr-only" for="exampleInputEmail3">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail3" name="email" placeholder="Enter email">
-            </div>
-            <div class="form-group">
-              <label class="sr-only" for="exampleInputPassword3">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword3" name="password" placeholder="Password">
-            </div>
-            <button type="submit" class="btn btn-default">Sign in</button><br>
+{#  <header>#}
+{#    <div class="container">#}
+{#      <img src="{% static 'img/logo.png' %}" class="logo" alt="">#}
+{#        {% if user.is_anonymous %}#}
+{#          <form class="form-inline" method='POST' action='{% url "auth:login" %}'>#}
+{#            {% csrf_token %}#}
+{#            <div class="form-group">#}
+{#              <label class="sr-only" for="exampleInputEmail3">Email address</label>#}
+{#              <input type="email" class="form-control" id="exampleInputEmail3" name="email" placeholder="Enter email">#}
+{#            </div>#}
+{#            <div class="form-group">#}
+{#              <label class="sr-only" for="exampleInputPassword3">Password</label>#}
+{#              <input type="password" class="form-control" id="exampleInputPassword3" name="password" placeholder="Password">#}
+{#            </div>#}
+{#            <button type="submit" class="btn btn-default">Sign in</button><br>#}
 {#            <div class="checkbox">#}
 {#              <label>#}
 {#                <input type="checkbox"> Remember me#}
 {#              </label>#}
 {#            </div>#}
-          </form>
-        {% else %}
-            <form class='form-inline' method='POST' action='{% url "auth:logout" %}'>
-                {% csrf_token %}
-                <button class='btn btn-default' type='submit'>Logout</button><br>
-            </form>
-        {% endif %}
-    </div>
-  </header>
+{#          </form>#}
+{#        {% else %}#}
+{#            <form class='form-inline' method='POST' action='{% url "auth:logout" %}'>#}
+{#                {% csrf_token %}#}
+{#                <button class='btn btn-default' type='submit'>Logout</button><br>#}
+{#            </form>#}
+{#        {% endif %}#}
+{#    </div>#}
+{#  </header>#}
 
     {% if not user.is_anonymous %}
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" id="nav-1">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -71,12 +75,12 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="{% active request home %}" ><a href="{{ home }}">Home</a></li>
-            <li class="{% active request members %}" ><a href="{{ members }}">Members</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Groups</a></li>
-            <li><a href="#">Photos</a></li>
-            <li class="{% active request my_profile%}" ><a href="{{ my_profile }}">Profile</a></li>
+            <li class="{% active request home  %}" id="nav__list__items" ><a href="{{ home }}"><i class="fas fa-home"></i></a></li>
+            <li class="{% active request members %}" id="nav__list__items"  ><a href="{{ members }}"><i class="fas fa-user-friends"></i></a></li>
+            <li id="nav__list__items" ><a href="#"><i class="fas fa-phone"></i></a></li>
+            <li id="nav__list__items" > <a href="#"><i class="fas fa-users"></i></a></li>
+            <li id="nav__list__items" ><a href="#"><i class="far fa-image"></i></a></li>
+            <li class="{% active request my_profile%}" id="nav__list__items" ><a href="{{ my_profile }}"><i class="fas fa-user-circle"></i></a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -102,62 +106,62 @@
             {% endblock %}
           </div>
           <div class="col-md-4">
-            {% if user.is_anonymous %}
-                <form class="form" method='POST' action='{% url "auth:signup" %}'>
-                    {% csrf_token %}
-                    <div class="form-group">
-                      <label class="sr-only" for="first_name">First Name</label>
-                      <input class="form-control" id="first_name" type="text" name="first_name" placeholder="First Name" required>
-                    </div>
-                    <div class="form-group">
-                      <label class="sr-only" for="last_name">Last Name</label>
-                      <input class="form-control" id="last_name" type="text" name="last_name" placeholder="Last Name" required>
-                    </div>
-                    <div class="form-group">
-                      <label class="sr-only" for="email">Email address</label>
-                      <input class="form-control" id="email" type="email" name="email" placeholder="Enter email" required>
-                    </div>
-                    <div class="form-group">
-                      <label class="sr-only" for="password">Password</label>
-                      <input class="form-control" id="password" type="password" name="password" placeholder="Password" required>
-                    </div>
-                    <div class="form-group">
-                      <label class="sr-only" for="c_password">Confirm Password</label>
-                      <input type="password" class="form-control" id="c_password" placeholder="Confirm Password" oninput="check(this)" >
-                    </div>
-                    <script language='javascript' type='text/javascript'>
-                        function check(input) {
-                            if (input.value != document.getElementById('password').value) {
-                                input.setCustomValidity('Password and Confirm Password do not match.');
-                            } else {
-                                // input is valid -- reset the error message
-                                input.setCustomValidity('');
-                            }
-                        }
-                    </script>
-                    <br /><br />
-                    <button type="submit" class="btn btn-default">Register</button><br>
-                </form>
-
-            {% else %}
-                <div class="panel panel-default friends">
+{#            {% if user.is_anonymous %}#}
+{#                <form class="form" method='POST' action='{% url "auth:signup" %}'>#}
+{#                    {% csrf_token %}#}
+{#                    <div class="form-group">#}
+{#                      <label class="sr-only" for="first_name">First Name</label>#}
+{#                      <input class="form-control" id="first_name" type="text" name="first_name" placeholder="First Name" required>#}
+{#                    </div>#}
+{#                    <div class="form-group">#}
+{#                      <label class="sr-only" for="last_name">Last Name</label>#}
+{#                      <input class="form-control" id="last_name" type="text" name="last_name" placeholder="Last Name" required>#}
+{#                    </div>#}
+{#                    <div class="form-group">#}
+{#                      <label class="sr-only" for="email">Email address</label>#}
+{#                      <input class="form-control" id="email" type="email" name="email" placeholder="Enter email" required>#}
+{#                    </div>#}
+{#                    <div class="form-group">#}
+{#                      <label class="sr-only" for="password">Password</label>#}
+{#                      <input class="form-control" id="password" type="password" name="password" placeholder="Password" required>#}
+{#                    </div>#}
+{#                    <div class="form-group">#}
+{#                      <label class="sr-only" for="c_password">Confirm Password</label>#}
+{#                      <input type="password" class="form-control" id="c_password" placeholder="Confirm Password" oninput="check(this)" >#}
+{#                    </div>#}
+{#                    <script language='javascript' type='text/javascript'>#}
+{#                        function check(input) {#}
+{#                            if (input.value != document.getElementById('password').value) {#}
+{#                                input.setCustomValidity('Password and Confirm Password do not match.');#}
+{#                            } else {#}
+{#                                // input is valid -- reset the error message#}
+{#                                input.setCustomValidity('');#}
+{#                            }#}
+{#                        }#}
+{#                    </script>#}
+{#                    <br /><br />#}
+{#                    <button type="submit" class="btn btn-default">Register</button><br>#}
+{#                </form>#}
+{##}
+{#            {% else %}#}
+                <div class="panel panel-default friends" id="friend-pnl">
             <div class="panel-heading">
             <h3 class="panel-title">My Friends</h3>
             </div>
             <div class="panel-body">
             <ul>
-              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/user.png' %}" alt=""></a></li>
-              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/user.png' %}" alt=""></a></li>
-              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/user.png' %}" alt=""></a></li>
-              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/user.png' %}" alt=""></a></li>
-              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/user.png' %}" alt=""></a></li>
-              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/user.png' %}" alt=""></a></li>
-              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/user.png' %}" alt=""></a></li>
-              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/user.png' %}" alt=""></a></li>
-              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/user.png' %}" alt=""></a></li>
+              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/download.jpeg' %}" alt=""></a></li>
+              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/download.jpeg' %}" alt=""></a></li>
+              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/download.jpeg' %}" alt=""></a></li>
+              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/download.jpeg' %}" alt=""></a></li>
+              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/download.jpeg' %}" alt=""></a></li>
+              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/download.jpeg' %}" alt=""></a></li>
+              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/download.jpeg' %}" alt=""></a></li>
+              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/download.jpeg' %}" alt=""></a></li>
+              <li><a href="profile.html" class="thumbnail"><img src="{% static 'img/download.jpeg' %}" alt=""></a></li>
             </ul>
             <div class="clearfix"></div>
-            <a class="btn btn-primary" href="#">View All Friends</a>
+            <a class="btn btn-primary" href="#" id="view-btn">View All Friends</a>
             </div>
             </div>
                 <div class="panel panel-default groups">
@@ -167,37 +171,37 @@
             <div class="panel-body">
             <div class="group-item">
               <img src="{% static 'img/group.png' %}" alt="">
-              <h4><a href="#" class="">Sample Group One</a></h4>
+              <h4><a href="#" class="sample">Sample Group One</a></h4>
               <p>This is a paragraph of intro text, or whatever I want to call it.</p>
             </div>
             <div class="clearfix"></div>
             <div class="group-item">
               <img src="{% static 'img/group.png' %}" alt="">
-              <h4><a href="#" class="">Sample Group Two</a></h4>
+              <h4><a href="#" class="sample">Sample Group Two</a></h4>
               <p>This is a paragraph of intro text, or whatever I want to call it.</p>
             </div>
             <div class="clearfix"></div>
             <div class="group-item">
               <img src="{% static 'img/group.png' %}" alt="">
-              <h4><a href="#" class="">Sample Group Three</a></h4>
+              <h4><a href="#" class="sample">Sample Group Three</a></h4>
               <p>This is a paragraph of intro text, or whatever I want to call it.</p>
             </div>
             <div class="clearfix"></div>
-            <a href="#" class="btn btn-primary">View All Groups</a>
+            <a href="#" class="btn btn-primary" id="view-btn-1">View All Groups</a>
             </div>
             </div>
-            {% endif %}
+{#            {% endif %}#}
 
           </div>
         </div>
       </div>
     </section>
 
-    <footer>
-      <div class="container">
-        <p>Dobble Copyright &copy, 2015</p>
-      </div>
-    </footer>
+{#    <footer>#}
+{#      <div class="container">#}
+{#        <p>Dobble Copyright &copy, 2015</p>#}
+{#      </div>#}
+{#    </footer>#}
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

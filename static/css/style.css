@@ -1,3 +1,7 @@
+.base-body {
+	background-color: #eee;
+}
+
 header{
 	background-image: linear-gradient(#04519b, #044687 60%, #033769);
 	color:#fff;
@@ -30,19 +34,37 @@ header .logo{
 }
 
 .panel-heading{
-    background-image: linear-gradient(#04519b, #044687 60%, #033769);
+    background-image: linear-gradient(-45deg, #3a98e0 0%, #04befe 100%);
     color: #fff !important;
 }
+#view-btn {
+	background-color: #1eb0f3;
+	border-color: #1eb0f3;
+	margin-left: 7em;
+}
+#view-btn-1 {
+	background-color: #1eb0f3;
+	border-color: #1eb0f3;
+	margin-left: 7em;
+}
+
+
 
 .bubble{
 	position: relative;
-	width: 580px;
+	width: 400px;
 	min-height: 65px;
 	padding: 15px;
 	background: #fff;
 	border-radius: 10px;
 	border: 1px solid #ccc;
+	  box-shadow:
+    inset -8px -8px 8px 0 rgba(255,255,255,0.7),
+    inset 8px 8px 8px 0 rgba(174,174,192,0.2);
+	display: block;
 }
+
+
 
 .bubble:after{
 	content:'';
@@ -53,8 +75,8 @@ header .logo{
 	display: block;
 	width: 0;
 	z-index: 1;
-	margin-top: -15px;
-	left:-15px;
+	margin-top: -14px;
+    left: -23px;
 	top: 50%;
 }
 
@@ -63,7 +85,7 @@ header .logo{
 	position: absolute;
 	border-style: solid;
 	border-width: 15px 15px 15px 0;
-	border-color: transparent #ccc;
+	border-color: transparent #b9b9b9;
 	display: block;
 	width: 0;
 	z-index: 0;
@@ -73,7 +95,8 @@ header .logo{
 }
 
 .post-actions{
-	margin:0 0 0 5px;
+	margin: 14px 0px 4px 283px;
+	color: #000000;
 }
 
 .comment-form .form-group{
@@ -173,3 +196,115 @@ footer{
 	padding-top: 40px;
 	}
 }
+/*sample*/
+
+.sample {
+	color: #4CAF50;
+}
+/*add*/
+#add-btn {
+	background-color: #1eb0f3;
+	margin-top: 1em;
+	color: white;
+}
+.like-1 {
+	color: #4CAF50;
+	margin-top: 2em;
+}
+
+
+/*sidebar*/
+
+
+
+:root {
+	--color-black-regular: #212121;
+	--color-black-dark: black;
+	--color-red-secondary: #ff1744;
+	--color-red-regular: #f44336;
+	--color-blue-secondary: #2979ff;
+	--color-blue-regular: #2196f3;
+	--color-orange-secondary: #ffea00;
+	--color-orange-regular: #ffc107;
+	--color-green-secondary: #00e676;
+	--color-green-regular: #4caf50;
+}
+
+@media only screen and (max-width: 87.5em) {
+	html {
+		font-size: 58%;
+	}
+}
+@media only screen and (max-width: 64em) {
+	html {
+		font-size: 55%;
+	}
+}
+@media only screen and (max-width: 45em) {
+	html {
+		font-size: 50%;
+	}
+}
+@media only screen and (max-width: 37.5em) {
+	html {
+		font-size: 45%;
+	}
+}
+@media only screen and (max-width: 25em) {
+	html {
+		font-size: 40%;
+	}
+}
+
+body {
+	box-sizing: border-box;
+
+}
+
+.container .nav {
+	position: absolute;
+	top: -1px;
+	left: -1px;
+	z-index: 16;
+	height: 552vh;
+	width: 7rem;
+	background: #1b202f;
+	z-index: 8;
+	box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+		0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+}
+.container .navbar-nav {
+	list-style: none;
+	font-size: 2rem;
+
+
+}
+
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+	width: 7rem;
+	background-color: #0172ff6e;
+}
+#nav__list__items:hover {
+	background-color: #0172ff6e;
+	width: 7rem;
+}
+
+
+#nav-1 {
+	background-color: transparent;
+	border-color: transparent;
+}
+
+.fa, .fas {
+	margin-left: 8px;
+	color: white;
+}
+.fa, .far {
+	margin-left: 8px;
+	color: white;
+}
+#friend-pnl {
+	margin-top: 27px;
+}
+

@@ -5,10 +5,10 @@
     {% if not user.is_anonymous %}
         {% include "wall_post.html" %}
         {% for post in posts_list %}
-          <div class="panel panel-default post">
-          <div class="panel-body">
+          <div class="panel panel-default post" id="post-bg">
+          <div class="panel-body" id="post-1">
              <div class="row">
-               <div class="col-sm-2">
+               <div class="col-sm-2" id="post-2">
                  <a href="{% url 'auth:profile' post.user.pk %}" class="post-avatar"><img style="border-radius: 100%;max-width: 100%;height: auto;" src="{{ post.user.profile.image.url }}" alt="{{ post.user.get_full_name }}"></a>
                </div>
                <div class="col-sm-10">
@@ -26,7 +26,7 @@
                  </div>
 
                  {% if post.can_like %}
-                     <p class="post-actions"><a href="{% url "timeline:like_post" post.id %}">Like</a>&nbsp;&nbsp;&nbsp;&nbsp; {{ post.likes_count}} {{ post.likes_count | pluralize:"Like,Likes" }}</p>
+                     <p class="post-actions"><a class="like-1" href="{% url "timeline:like_post" post.id %}">Like</a>&nbsp;&nbsp;&nbsp;&nbsp; {{ post.likes_count}} {{ post.likes_count | pluralize:"Like,Likes" }}</p>
                  {% else %}
                      <p class="post-actions"><a href="{% url "timeline:unlike_post" post.id %}">unlike</a>&nbsp;&nbsp;&nbsp;&nbsp;{{ post.likes_count}} {{ post.likes_count | pluralize:"Like,Likes" }}</p>
                  {% endif %}

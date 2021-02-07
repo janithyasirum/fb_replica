@@ -1,6 +1,9 @@
 {% load static %}
 {% load tags %}
 
+{% url 'auth:index' as home %}
+{% url 'auth:members' as members %}
+{% url 'auth:profile' user.pk as my_profile %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,76 +17,96 @@
     <title>Dobble Social Network</title>
 
     <!-- Bootstrap core CSS -->
-{#    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">#}
+    {#    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">#}
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/login.css' %}" rel="stylesheet">
-{#    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">#}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    {#    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">#}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+          integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+          crossorigin="anonymous"/>
 </head>
 
 <body>
 
 <div class="container">
+
     <div class="forms-container">
         <div class="signin-signup">
-            <form action="#" class="sign-in-form">
+
+            <form class="sign-in-form" method='POST' action='{% url "auth:login" %}'>
+                {% csrf_token %}
                 <h2 class="title">Sign in</h2>
                 <div class="input-field">
                     <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Username"/>
+                    <input type="email" class="form-control" id="exampleInputEmail3" name="email"
+                           placeholder="Enter email">
                 </div>
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password"/>
+                    <input type="password" class="form-control" id="exampleInputPassword3" name="password"
+                           placeholder="Password">
                 </div>
-                <input type="submit" value="Login" class="btn solid"/>
-                <p class="social-text">Or Sign in with social platforms</p>
-                <div class="social-media">
-                    <a href="#" class="social-icon">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="social-icon">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="social-icon">
-                        <i class="fab fa-google"></i>
-                    </a>
-                    <a href="#" class="social-icon">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                </div>
+                <button type="submit" class="btn btn-default">Sign in</button>
+                <br>
+                {#                <p class="social-text">Or Sign in with social platforms</p>#}
+                {#                <div class="social-media">#}
+                {#                    <a href="#" class="social-icon">#}
+                {#                        <i class="fab fa-facebook-f"></i>#}
+                {#                    </a>#}
+                {#                    <a href="#" class="social-icon">#}
+                {#                        <i class="fab fa-twitter"></i>#}
+                {#                    </a>#}
+                {#                    <a href="#" class="social-icon">#}
+                {#                        <i class="fab fa-google"></i>#}
+                {#                    </a>#}
+                {#                    <a href="#" class="social-icon">#}
+                {#                        <i class="fab fa-linkedin-in"></i>#}
+                {#                    </a>#}
+                {#                </div>#}
             </form>
-            <form action="#" class="sign-up-form">
+
+            <form class="sign-up-form" method='POST' action='{% url "auth:signup" %}'>
+                {% csrf_token %}
                 <h2 class="title">Sign up</h2>
                 <div class="input-field">
                     <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Username"/>
+                    <input class="form-control" id="first_name" type="text" name="first_name" placeholder="First Name"
+                           required>
                 </div>
                 <div class="input-field">
                     <i class="fas fa-envelope"></i>
-                    <input type="email" placeholder="Email"/>
+                    <input class="form-control" id="last_name" type="text" name="last_name" placeholder="Last Name"
+                           required>
+
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-envelope"></i>
+                    <input class="form-control" id="email" type="email" name="email" placeholder="Enter email" required>
+
                 </div>
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password"/>
+                    <input class="form-control" id="password" type="password" name="password" placeholder="Password"
+                           required>
+
                 </div>
                 <input type="submit" class="btn" value="Sign up"/>
-                <p class="social-text">Or Sign up with social platforms</p>
-                <div class="social-media">
-                    <a href="#" class="social-icon">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="social-icon">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="social-icon">
-                        <i class="fab fa-google"></i>
-                    </a>
-                    <a href="#" class="social-icon">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                </div>
+                {#                <p class="social-text">Or Sign up with social platforms</p>#}
+                {#                <div class="social-media">#}
+                {#                    <a href="#" class="social-icon">#}
+                {#                        <i class="fab fa-facebook-f"></i>#}
+                {#                    </a>#}
+                {#                    <a href="#" class="social-icon">#}
+                {#                        <i class="fab fa-twitter"></i>#}
+                {#                    </a>#}
+                {#                    <a href="#" class="social-icon">#}
+                {#                        <i class="fab fa-google"></i>#}
+                {#                    </a>#}
+                {#                    <a href="#" class="social-icon">#}
+                {#                        <i class="fab fa-linkedin-in"></i>#}
+                {#                    </a>#}
+                {#                </div>#}
             </form>
         </div>
     </div>
@@ -93,8 +116,8 @@
             <div class="content">
                 <h3>New here ?</h3>
                 <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
-                    ex ratione. Aliquid!
+                    A better way to connect with your friends, peers, colleagues, coworkers, etc... The world is just
+                    ahead of your fingertips
                 </p>
                 <button class="btn transparent" id="sign-up-btn">
                     Sign up
@@ -106,8 +129,7 @@
             <div class="content">
                 <h3>One of us ?</h3>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-                    laboriosam ad deleniti.
+                    The whole world is at our fingertips, Just log in
                 </p>
                 <button class="btn transparent" id="sign-in-btn">
                     Sign in
